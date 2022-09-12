@@ -9,4 +9,4 @@ This project is licensed under the MIT License - see the [LICENSE.txt](https://g
 
 
 # Building Status
-![](https://img.shields.io/static/v1?label=Status&message=Succeded&color=green&style=plastic&logo=visual-studio)
+![](https://img.shields.io/static/v1?label=Status&message=Succeded&color=success&style=plastic&logo=visual-studio)
