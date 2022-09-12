@@ -47,7 +47,7 @@
             return foodIndex;
         }
 
-        public void SetHorizontalLine(int topY)
+        private void SetHorizontalLine(int topY)
         {
             for (int currLeftXpossition = 0; currLeftXpossition < this.LeftX; currLeftXpossition++)
             {
@@ -57,7 +57,7 @@
             }
         }
 
-        public void SetVerticalLine(int leftX)
+        private void SetVerticalLine(int leftX)
         {
             for (int currTopYPossition = 1; currTopYPossition < this.TopY + 1; currTopYPossition++)
             {

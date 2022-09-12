@@ -5,7 +5,7 @@
     internal class MagentaFood : Food
     {
         private const ConsoleColor foodColor = ConsoleColor.Magenta;
-        private const int foodPoints = 2;
+        private const int foodPoints = 3;
 
         public MagentaFood(Field field)
             : base(field, foodPoints, foodColor)

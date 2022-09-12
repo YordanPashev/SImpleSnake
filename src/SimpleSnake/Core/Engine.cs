@@ -13,26 +13,41 @@
         private readonly Point[] pointOfDirection;
         private readonly Snake snake;
         private readonly Field field;
+        private readonly DifficultyLevel difficultyLevel;
 
-        private Direction direction;
         private double sleepTime;
+        private double sleepDecrement;
+        private Direction direction;
+        private Random randomDirectionValue;
 
         private Engine()
         {
-            this.sleepTime = GlobalConstants.InitialSleepTime;
             this.pointOfDirection = new Point[GlobalConstants.DirectionsCount];
+            this.sleepDecrement = GlobalConstants.SleepDecrement;
+            this.randomDirectionValue = new Random();
         }
 
-        public Engine(Field field, Snake snake)
+        public Engine(Field field, Snake snake, DifficultyLevel difficultyLevel)
             : this()
         {
             this.field = field;
             this.snake = snake;
+            this.difficultyLevel = difficultyLevel;
         }
 
         public void Run()
         {
             InitializeDirections();
+            SetDifficultyLevel(this.difficultyLevel);
+
+            int initialDirection = randomDirectionValue.Next(0 , GlobalConstants.DirectionsCount);
+
+            if (initialDirection == 1)
+            {
+                initialDirection = 0;
+            }
+            this.direction = (Direction)initialDirection;
+
             bool isSnakeAlive = true;
 
             while (isSnakeAlive)
@@ -42,16 +57,21 @@
                     this.GetNextDirection();
                 }
 
-                Point direction = this.pointOfDirection[(int)this.direction];       
-                bool isSnakeMoved = this.snake.TryToMakeAMove(direction);
+                Point direction = this.pointOfDirection[(int)this.direction];
+                bool canSnakeMove = this.snake.TryToMakeAMove(direction);
 
-                if (!isSnakeMoved)
+                if (!canSnakeMove)
                 {
+                    ConsoleRenderer.DisplayGameOver();
                     GameOver();
                 }
 
-                sleepTime -= 0.01;
-                Thread.Sleep((int)this.sleepTime);
+                if (sleepTime - sleepDecrement > GlobalConstants.MinSleepTime)
+                {
+                    sleepTime -= sleepDecrement;
+                }
+
+                Thread.Sleep((int)sleepTime);
             }
         }
 
@@ -66,14 +86,14 @@
                 StartUp.Main();
             }
 
-            else if(userAnswer == "2")
+            else if (userAnswer == "2")
             {
-                ConsoleRenderer.DisplayGoodByeMessage();
                 Environment.Exit(0);
             }
 
             else
             {
+                Console.Clear();
                 GameOver();
             }
         }
@@ -82,7 +102,7 @@
         {
             ConsoleKeyInfo userInput = Console.ReadKey();
 
-            if (userInput.Key == ConsoleKey.LeftArrow && 
+            if (userInput.Key == ConsoleKey.LeftArrow &&
                 direction != Direction.Right)
             {
                 direction = Direction.Left;
@@ -116,5 +136,24 @@
             this.pointOfDirection[2] = new Point(0, 1);
             this.pointOfDirection[3] = new Point(0, -1);
         }
+
+        private void SetDifficultyLevel(DifficultyLevel difficultyLevel)
+        {
+            if (difficultyLevel == DifficultyLevel.Easy)
+            {
+                this.sleepTime = GlobalConstants.EasyDiffinitialSleepTime;
+            }
+
+            else if (difficultyLevel == DifficultyLevel.Meadium)
+            {
+                this.sleepTime = GlobalConstants.MidiumDiffinitialSleepTime;
+            }
+
+            else if (difficultyLevel == DifficultyLevel.Hard)
+            {
+                this.sleepTime = GlobalConstants.HardDiffinitialSleepTime;
+            }
+        }
     }
 }
+

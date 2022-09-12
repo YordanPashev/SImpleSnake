@@ -6,7 +6,7 @@
 
     using Common;
     using GameObjects.Foods;
-    using SimpleSnake.Renderer;
+    using Renderer;
 
     public class Snake
     {
@@ -20,8 +20,9 @@
         private int foodIndex;
         private int totalPoints;
 
-        private const char snakeSymbol = '\u25CF';
+        private const char snakeSymbol = ' ';
         private const char empytSpace = ' ';
+        private const ConsoleColor snakeColor = ConsoleColor.Green;
         private const int initialSnakePoints = 6;    
 
         private Snake()
@@ -46,9 +47,6 @@
 
             if (!isNextMovePossible(nextPositionOfSnakeHead))
             {
-                field.SetVerticalLine(0);
-                field.SetVerticalLine(GlobalConstants.FieldWidth - 1);
-
                 return false;
             }
 
@@ -59,25 +57,12 @@
             }
 
             this.snake.Enqueue(nextPositionOfSnakeHead);
+            Console.BackgroundColor = snakeColor;
             nextPositionOfSnakeHead.Draw(snakeSymbol);
+            Console.BackgroundColor = ConsoleColor.White;
             Point snakeTail = this.snake.Dequeue();
             snakeTail.Draw(empytSpace);
 
-
-            return true;
-        }
-
-        private bool isNextMovePossible(Point nextPositionOfSnakeHead)
-        {
-            if(this.snake.Any(p => p.LeftX == this.nextLeftX && p.TopY == nextTopY))
-            {
-                return false;
-            }
-
-            if (this.field.IsPointOfWall(nextPositionOfSnakeHead))
-            {
-                return false;
-            }
 
             return true;
         }
@@ -118,6 +103,21 @@
             ConsoleRenderer.VisualizePlayerResult(this.totalPoints);
 
             foodIndex = this.field.CreateFood(this.snake, this.foodIndex, this.foods);
+        }
+
+        private bool isNextMovePossible(Point nextPositionOfSnakeHead)
+        {
+            if (this.snake.Any(p => p.LeftX == this.nextLeftX && p.TopY == nextTopY))
+            {
+                return false;
+            }
+
+            if (this.field.IsPointOfWall(nextPositionOfSnakeHead))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
