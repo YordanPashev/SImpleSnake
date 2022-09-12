@@ -1,4 +1,4 @@
-# SimpleSskae :snake:
+# Simple Snake :snake:
 Simple Snake is a Classical Console game we all love playing!
 
 # Author
