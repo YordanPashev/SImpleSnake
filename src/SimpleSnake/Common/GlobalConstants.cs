@@ -11,9 +11,9 @@
       
         // Difficulty Level
         public const int DifficultyLevelQuestionLeftX = 101;
-        public const int DifficultyLevelQuestioTopY = 12;
+        public const int DifficultyLevelQuestioTopY = 4;
         public const int LevelsLeftX = 106;
-        public const int LevelsTopY = 14;
+        public const int LevelsTopY = 6;
 
         // Directions
         public const int DirectionsCount = 4;
