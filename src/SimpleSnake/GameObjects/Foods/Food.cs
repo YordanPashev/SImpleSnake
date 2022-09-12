@@ -10,7 +10,6 @@
     {
         private readonly Random random;
         private readonly Field field;
-        private readonly char foodSymbol = ' ';
 
         protected Food(Field field, int foodPoints, ConsoleColor foodColor) 
             : base(field.LeftX, field.TopY)
@@ -34,9 +33,9 @@
                 this.TopY = random.Next(GlobalConstants.InitiaFieldlTopYConsoleCursor  + 1, field.TopY + GlobalConstants.InitiaFieldlTopYConsoleCursor  - 1);
             } while(snake.Any(s => s.LeftX == this.LeftX && s.TopY == this.TopY));
 
-            Console.BackgroundColor = this.Color;
-            this.Draw(foodSymbol);
-            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = this.Color;
+            this.Draw(GlobalConstants.FoodSymbol);
+            Console.ForegroundColor = ConsoleColor.Black;
         }
 
         public bool IsFoodPoint(Point sneakHead)

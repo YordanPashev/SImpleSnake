@@ -6,8 +6,8 @@
     {
         public Point(int leftX, int topY)
         {
-            LeftX = leftX;
-            TopY = topY;
+            this.LeftX = leftX;
+            this.TopY = topY;
         }
 
         public int LeftX { get; set; }

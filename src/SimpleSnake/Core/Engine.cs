@@ -15,10 +15,11 @@
         private readonly Field field;
         private readonly DifficultyLevel difficultyLevel;
 
-        private double sleepTime;
-        private double sleepDecrement;
         private Direction direction;
         private Random randomDirectionValue;
+
+        private double sleepTime;
+        private double sleepDecrement;
 
         private Engine()
         {
@@ -40,13 +41,13 @@
             InitializeDirections();
             SetDifficultyLevel(this.difficultyLevel);
 
-            int initialDirection = randomDirectionValue.Next(0 , GlobalConstants.DirectionsCount);
+            int initialDirectionIndex = randomDirectionValue.Next(0 , GlobalConstants.DirectionsCount);
+            this.direction = (Direction)initialDirectionIndex;
 
-            if (initialDirection == 1)
+            if (this.direction == Direction.Left)
             {
-                initialDirection = 0;
+                this.snake.DrawSnakeForInitialDirectionLeft(this.pointOfDirection[(int)this.direction]);
             }
-            this.direction = (Direction)initialDirection;
 
             bool isSnakeAlive = true;
 
@@ -58,20 +59,20 @@
                 }
 
                 Point direction = this.pointOfDirection[(int)this.direction];
-                bool canSnakeMove = this.snake.TryToMakeAMove(direction);
+                bool isSnakeMoved = this.snake.TryToMakeAMove(direction);
 
-                if (!canSnakeMove)
+                if (!isSnakeMoved)
                 {
                     ConsoleRenderer.DisplayGameOver();
                     GameOver();
                 }
 
-                if (sleepTime - sleepDecrement > GlobalConstants.MinSleepTime)
+                if (this.sleepTime - this.sleepDecrement > GlobalConstants.MinSleepTime)
                 {
-                    sleepTime -= sleepDecrement;
+                    this.sleepTime -= this.sleepDecrement;
                 }
 
-                Thread.Sleep((int)sleepTime);
+                Thread.Sleep((int)this.sleepTime);
             }
         }
 
@@ -103,27 +104,27 @@
             ConsoleKeyInfo userInput = Console.ReadKey();
 
             if (userInput.Key == ConsoleKey.LeftArrow &&
-                direction != Direction.Right)
+                this.direction != Direction.Right)
             {
-                direction = Direction.Left;
+                this.direction = Direction.Left;
             }
 
             else if (userInput.Key == ConsoleKey.RightArrow &&
-                     direction != Direction.Left)
+                     this.direction != Direction.Left)
             {
-                direction = Direction.Right;
+                this.direction = Direction.Right;
             }
 
             else if (userInput.Key == ConsoleKey.UpArrow &&
-                     direction != Direction.Down)
+                     this.direction != Direction.Down)
             {
-                direction = Direction.Up;
+                this.direction = Direction.Up;
             }
 
             else if (userInput.Key == ConsoleKey.DownArrow &&
-                     direction != Direction.Up)
+                     this.direction != Direction.Up)
             {
-                direction = Direction.Down;
+                this.direction = Direction.Down;
             }
 
             Console.CursorVisible = false;

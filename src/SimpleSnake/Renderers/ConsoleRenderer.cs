@@ -27,12 +27,11 @@
         public static void DisplayGameOver()
         {
             Console.SetCursorPosition(GlobalConstants.GameOverLeftX, GlobalConstants.GameOverTopY);
-            Console.BackgroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.DarkRed;
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Game Over");
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
-
         }
 
         public static void DisplayQuestionForOneMoreGame()
@@ -49,7 +48,10 @@
         public static void VisualizeGameName()
         {
             Console.SetCursorPosition(GlobalConstants.NameLefXCursorPossition, GlobalConstants.NameTopYCursorPossition);
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("Simple Snake");
+            Console.ForegroundColor = ConsoleColor.Black;
+
         }
 
         public static void VisualizePoint(int leftX, int topY, char symbol)
@@ -72,7 +74,7 @@
 
         public static void VisualizeFoodInfo(Field field)
         {
-            List<Food> foods = field.GetFoods().OrderByDescending(f => f.Points).ToList();
+            List<Food> foods = field.GetAllTypeOfFoods().OrderByDescending(f => f.Points).ToList();
             int leftX = GlobalConstants.FoodInfoLeftX;
             int topY = GlobalConstants.FoodInfoTopY;
             int foodInfoLine = 2;
@@ -80,9 +82,9 @@
             for (int i = 0; i < foods.Count; i++)
             {
                 Console.SetCursorPosition(leftX, topY + foodInfoLine);
-                Console.BackgroundColor = foods[i].Color;
-                Console.Write(' ');
-                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = foods[i].Color;
+                Console.Write(GlobalConstants.FoodSymbol);
+                Console.ForegroundColor = ConsoleColor.Black;
                 Console.Write($" -> {foods[i].Points} Points");
                 foodInfoLine += 2;
             }

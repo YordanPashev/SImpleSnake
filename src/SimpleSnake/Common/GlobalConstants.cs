@@ -33,33 +33,6 @@
         public const int GameOverLeftX = 105;
         public const int GameOverTopY = 13;
 
-        // SleepTime
-        public const int EasyDiffinitialSleepTime = 200;
-        public const int MidiumDiffinitialSleepTime = 150;
-        public const int HardDiffinitialSleepTime = 100;
-        public const double SleepDecrement = 0.1;
-        public const double MinSleepTime = 20;
-
-        // Walls Indices
-        public const int WallStartLeftXIndex = InitialFieldLeftXConsoleCursor - 1;
-        public const int WallEndLeftXIndex = 80 + FieldWidth;
-        public const int WallStartTopYIndex = InitiaFieldlTopYConsoleCursor;
-        public const int WallEndTopYIndex = FieldHeight + InitiaFieldlTopYConsoleCursor;
-
-        // Welcome Message
-        public const int WelcomeMessageLeftX = 104;
-        public const int WelcomeMessageTopY = 9;
-
-        // Wall Symbols
-        public const char HorizontalWallSymbol = '\u2588';
-        public const char VerticalWallSymbol = '\u2588';
-
-
-
-        
-
-
-
         // Player Info
         public const int ResultLeftX = 150;
         public const int ResultTopY = 9;
@@ -72,5 +45,26 @@
         public const int FoodInfoLeftX = 150;
         public const int FoodInfoTopY = 11;
 
+        // SleepTime
+        public const int EasyDiffinitialSleepTime = 200;
+        public const int MidiumDiffinitialSleepTime = 150;
+        public const int HardDiffinitialSleepTime = 100;
+        public const double SleepDecrement = 0.1;
+        public const double MinSleepTime = 20;
+        
+        // Walls Indices
+        public const int WallStartLeftXIndex = InitialFieldLeftXConsoleCursor - 1;
+        public const int WallEndLeftXIndex = 80 + FieldWidth;
+        public const int WallStartTopYIndex = InitiaFieldlTopYConsoleCursor;
+        public const int WallEndTopYIndex = FieldHeight + InitiaFieldlTopYConsoleCursor;
+
+        // Welcome Message
+        public const int WelcomeMessageLeftX = 104;
+        public const int WelcomeMessageTopY = 9;
+
+        // Symbols
+        public const char HorizontalWallSymbol = '\u2588';
+        public const char VerticalWallSymbol = '\u2588';
+        public const char FoodSymbol = '\u25CF';
     }
 }

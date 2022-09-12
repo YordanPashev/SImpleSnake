@@ -2,12 +2,12 @@
 {
     using System;
 
-    internal class DarkYellowFood : Food
+    internal class CyanFood : Food
     {
-        private const ConsoleColor foodColor = ConsoleColor.DarkYellow;
+        private const ConsoleColor foodColor = ConsoleColor.Cyan;
         private const int foodPoints = 2;
 
-        public DarkYellowFood(Field field)
+        public CyanFood(Field field)
             : base(field, foodPoints, foodColor)
         {
         }

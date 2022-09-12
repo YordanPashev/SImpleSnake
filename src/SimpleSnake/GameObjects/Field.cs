@@ -13,8 +13,11 @@
         private List<Food> foods;
 
         public Field(int leftX, int topY)
-            : base(leftX, topY) 
-            => InitializeWallBorders();
+            : base(leftX, topY)
+        {
+            InitializeWallBorders();
+            this.foods = CreateListOfAllFoodTypes();
+        }
 
         public bool IsPointOfWall(Point snakeHead)
             => snakeHead.LeftX == GlobalConstants.WallStartLeftXIndex + 1 ||
@@ -22,7 +25,9 @@
                snakeHead.TopY == GlobalConstants.WallStartTopYIndex ||
                snakeHead.TopY == GlobalConstants.WallEndTopYIndex;
 
-        public List<Food> GetFoods()
+        public List<Food> GetAllTypeOfFoods() => this.foods;
+
+        private List<Food> CreateListOfAllFoodTypes()
         {
            this.foods = new List<Food>();
            Type[] foodTypes = Assembly.GetExecutingAssembly()
@@ -37,13 +42,13 @@
                 this.foods.Add(currFood);
             }
 
-            return foods;
+            return this.foods;
         }
 
-        public int CreateFood(Queue<Point> snake, int foodIndex, List<Food> foods)
+        public int CreateFood(Queue<Point> snake)
         {
-            foodIndex = new Random().Next(0, foods.Count);
-            foods[foodIndex].SetRandomPosition(snake);
+            int foodIndex = new Random().Next(0, foods.Count);
+            this.foods[foodIndex].SetRandomPosition(snake);
             return foodIndex;
         }
 
@@ -52,8 +57,8 @@
             for (int currLeftXpossition = 0; currLeftXpossition < this.LeftX; currLeftXpossition++)
             {
                 this.Draw(currLeftXpossition + GlobalConstants.InitialFieldLeftXConsoleCursor, 
-                    topY + GlobalConstants.InitiaFieldlTopYConsoleCursor ,
-                    GlobalConstants.HorizontalWallSymbol);
+                          topY + GlobalConstants.InitiaFieldlTopYConsoleCursor ,
+                          GlobalConstants.HorizontalWallSymbol);
             }
         }
 
