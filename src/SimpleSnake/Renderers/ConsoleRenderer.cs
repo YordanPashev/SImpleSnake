@@ -5,13 +5,23 @@
     using System.Linq;
 
     using Common;
+    using DataProcessor;
+    using Enums;
     using GameObjects;
     using GameObjects.Foods;
-    using SimpleSnake.Enums;
 
     public static class ConsoleRenderer
     {
-        public static void AskUserForDifficultyLeve()
+        public static void AskPlayerToFillHisName()
+        {
+            Console.SetCursorPosition(GlobalConstants.NewHighScoreLeftX, GlobalConstants.NewHighScoreTopY);
+            Console.WriteLine("You set a new record! Please fill your name (20 symbols max):");
+            Console.SetCursorPosition(GlobalConstants.NewHighScoreLeftX, GlobalConstants.NewHighScoreTopY + 1);
+            Console.WriteLine(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(GlobalConstants.NewHighScoreLeftX, GlobalConstants.NewHighScoreTopY + 1);
+        }
+
+        public static void AskPlayerForDifficultyLeve()
         {
             Console.SetCursorPosition(GlobalConstants.DifficultyLevelQuestionLeftX, GlobalConstants.DifficultyLevelQuestioTopY);
             Console.WriteLine("Select difficulty:");
@@ -21,6 +31,8 @@
             Console.WriteLine("2. Medium");
             Console.SetCursorPosition(GlobalConstants.LevelsLeftX, GlobalConstants.LevelsTopY + 2);
             Console.WriteLine("3. Hard");
+            Console.SetCursorPosition(GlobalConstants.LevelsLeftX, GlobalConstants.LevelsTopY + 4);
+            Console.WriteLine(new string(' ', Console.WindowWidth));
             Console.SetCursorPosition(GlobalConstants.LevelsLeftX, GlobalConstants.LevelsTopY + 4);
         }
 
@@ -39,10 +51,18 @@
             Console.SetCursorPosition(GlobalConstants.AskUserForOneMoreGameLeftX, GlobalConstants.AskUserForOneMoreGameTopY);
             Console.WriteLine("Do you want to play one more game?");
             Console.SetCursorPosition(GlobalConstants.AnswerLeftX, GlobalConstants.AnswerTopY);
-            Console.WriteLine("1. Yes");
+            Console.WriteLine("Press 1 to play");
             Console.SetCursorPosition(GlobalConstants.AnswerLeftX, GlobalConstants.AnswerTopY + 1);
-            Console.WriteLine("2. No");
+            Console.WriteLine("Press 2 for Exit");
             Console.SetCursorPosition(GlobalConstants.AnswerLeftX + 3, GlobalConstants.AnswerTopY + 3);
+            Console.WriteLine(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(GlobalConstants.AnswerLeftX + 3, GlobalConstants.AnswerTopY + 3);
+        }
+
+        public static void InvalidNameMessage()
+        {
+            Console.SetCursorPosition(GlobalConstants.NewHighScoreLeftX + 10, GlobalConstants.NewHighScoreTopY - 1);
+            Console.WriteLine("Invalid name! (must be 20 characters max)");
         }
 
         public static void VisualizeGameName()
@@ -51,8 +71,24 @@
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("Simple Snake");
             Console.ForegroundColor = ConsoleColor.Black;
+        }
 
+        public static void VisualizeHighScoreList(PlayerDto[] highScoreList)
+        {
+            int lineCounter = 0;
+            Console.SetCursorPosition(GlobalConstants.Top3HighScoreLeftX + 5, GlobalConstants.Top3HighScoreTopY + lineCounter++);
+            Console.WriteLine("TOP 3");
 
+            foreach (var player in highScoreList)
+            {
+                if (player.Name == null || player.Score == 0)
+                {
+                    continue;
+                }
+
+                Console.SetCursorPosition(GlobalConstants.Top3HighScoreLeftX, GlobalConstants.Top3HighScoreTopY + ++lineCounter);
+                Console.WriteLine($"{player.Rank}. {player.Name} - {player.Score}");
+            }
         }
 
         public static void VisualizePoint(int leftX, int topY, char symbol)
@@ -70,7 +106,16 @@
         public static void VisualizeDifficultyLevel(DifficultyLevel diffuciltyLevel)
         {
             Console.SetCursorPosition(GlobalConstants.DifficultyLevelLeftX, GlobalConstants.DifficultyLevelTopY);
-            Console.Write($"Difficulty Level: {diffuciltyLevel}");
+            if (diffuciltyLevel == DifficultyLevel.Easy)
+            {
+                Console.Write($"Difficulty Level: {diffuciltyLevel}");
+            }
+            else
+            {
+                Console.Write(@$"Difficulty Level: {diffuciltyLevel} - Points x{(diffuciltyLevel == DifficultyLevel.Medium 
+                                                                                ? GlobalConstants.MidiumDiffPointsMultiplier
+                                                                                : GlobalConstants.HardDiffPointsMultiplier)}");
+            }
         }
 
         public static void VisualizeFoodInfo(Field field)

@@ -1,11 +1,15 @@
 ﻿namespace SimpleSnake.Core
 {
     using System;
+    using System.IO;
     using System.Threading;
 
-    using GameObjects;
+    using Newtonsoft.Json;
+
     using Common;
+    using DataProcessor;
     using Enums;
+    using GameObjects;
     using Renderer;
 
     public class Engine : IEngine
@@ -16,9 +20,12 @@
 
         private Direction direction;
         private Random randomDirectionValue;
-
+        private PlayerDto[] topThreePlayers;
+        private int surpassedPlayerIndex;
         private double sleepTime;
         private double sleepDecrement;
+        private string playerName;
+
 
         private Engine()
         {
@@ -27,11 +34,12 @@
             this.randomDirectionValue = new Random();
         }
 
-        public Engine(Snake snake, DifficultyLevel difficultyLevel)
+        public Engine(Snake snake, DifficultyLevel difficultyLevel, PlayerDto[] topThreePlayers)
             : this()
         {
             this.snake = snake;
             this.difficultyLevel = difficultyLevel;
+            this.topThreePlayers = topThreePlayers;
         }
 
         public void Run()
@@ -74,7 +82,7 @@
             }
         }
 
-        private void GameOver()
+        private void AskPlayerForOneMoreGame()
         {
             ConsoleRenderer.DisplayQuestionForOneMoreGame();
             string userAnswer = Console.ReadLine();
@@ -92,8 +100,46 @@
 
             else
             {
-                Console.Clear();
-                GameOver();
+                AskPlayerForOneMoreGame();
+            }
+        }
+
+        private void GameOver()
+        {
+            if (IsPlayerSetARecord(this.snake.TotalPoints, this.topThreePlayers))
+            {
+                GetPlayerName();
+
+                int playerRank = topThreePlayers[surpassedPlayerIndex].Rank;
+                int playerScore = this.snake.TotalPoints;
+                this.topThreePlayers[surpassedPlayerIndex] = new PlayerDto
+                {
+                    Rank = playerRank,
+                    Name = this.playerName,
+                    Score = playerScore,
+                };
+
+                string newJsonHighScoreList = JsonConvert.SerializeObject(this.topThreePlayers, Formatting.Indented);
+                File.WriteAllText(GlobalConstants.filePathOfHighScoreList, newJsonHighScoreList);
+            }
+
+            AskPlayerForOneMoreGame();
+        }
+
+        private void GetPlayerName()
+        {
+            ConsoleRenderer.AskPlayerToFillHisName();
+            string playerName = Console.ReadLine();
+
+            if (IsPlayerNameValid(playerName))
+            {
+                 this.playerName = playerName;           
+            }
+
+            else
+            {
+                ConsoleRenderer.InvalidNameMessage();
+                GetPlayerName();
             }
         }
 
@@ -128,6 +174,28 @@
             Console.CursorVisible = false;
         }
 
+        private bool IsPlayerNameValid(string playerName)
+            => !string.IsNullOrWhiteSpace(playerName) && playerName.Length < 20;
+
+        private bool IsPlayerSetARecord(int totalScore, PlayerDto[] topThreePlayers)
+        {
+            if (totalScore == 0)
+            {
+                return false;
+            }
+
+            for(int currPlayerIndex = 0; currPlayerIndex < topThreePlayers.Length; currPlayerIndex++)
+            {
+                if (topThreePlayers[currPlayerIndex].Score < totalScore)
+                {
+                    this.surpassedPlayerIndex = currPlayerIndex;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private void InitializeDirections()
         {
             this.pointOfDirection[0] = new Point(1, 0);
@@ -143,7 +211,7 @@
                 this.sleepTime = GlobalConstants.EasyDiffinitialSleepTime;
             }
 
-            else if (difficultyLevel == DifficultyLevel.Meadium)
+            else if (difficultyLevel == DifficultyLevel.Medium)
             {
                 this.sleepTime = GlobalConstants.MidiumDiffinitialSleepTime;
             }

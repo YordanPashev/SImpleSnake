@@ -3,10 +3,10 @@
     public static class GlobalConstants
     {
         // Ask User For One More Game
-        public const int AnswerLeftX = 105;
-        public const int AnswerTopY = 29;
-        public const int AskUserForOneMoreGameLeftX = 93;
-        public const int AskUserForOneMoreGameTopY = 27;  
+        public const int AnswerLeftX = 100;
+        public const int AnswerTopY = 31;
+        public const int AskUserForOneMoreGameLeftX = 92;
+        public const int AskUserForOneMoreGameTopY = 29;  
 
         // Difficulty Level
         public const int DifficultyLevelQuestionLeftX = 101;
@@ -23,6 +23,9 @@
         public const int InitialFieldLeftXConsoleCursor = 80;
         public const int InitiaFieldlTopYConsoleCursor  = 3;
 
+        // File Paths
+        public const string filePathOfHighScoreList = "HighScoreList.json";
+
         // Game Name
         public const int NameLefXCursorPossition = 104;
         public const int NameTopYCursorPossition = 1;
@@ -33,12 +36,20 @@
 
         // Player Info
         public const int DifficultyLevelLeftX = 150;
-        public const int DifficultyLevelTopY = 5;
+        public const int DifficultyLevelTopY = 4;
         public const int FoodInfoLeftX = 150;
-        public const int FoodInfoTopY = 11;
+        public const int FoodInfoTopY = Top3HighScoreTopY + 5;
         public const int InitialPlayerPoints = 0;
         public const int ResultLeftX = 150;
-        public const int ResultTopY = 9;
+        public const int ResultTopY = DifficultyLevelTopY + 3;
+        public const int Top3HighScoreLeftX = 150;
+        public const int Top3HighScoreTopY = ResultTopY + 3;
+        public const int MidiumDiffPointsMultiplier = 2;
+        public const int HardDiffPointsMultiplier = 3;
+
+        // New HighScore 
+        public const int NewHighScoreLeftX = 80;
+        public const int NewHighScoreTopY = 26;
 
         // SleepTime
         public const int EasyDiffinitialSleepTime = 200;
