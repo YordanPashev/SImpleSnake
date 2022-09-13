@@ -5,8 +5,8 @@
     using Core;
     using GameObjects;
     using Renderer;
-    using SimpleSnake.Common;
-    using SimpleSnake.Enums;
+    using Common;
+    using Enums;
     using Utilities;
 
     public class StartUp
@@ -24,7 +24,7 @@
             ConsoleRenderer.VisualizePlayerResult(GlobalConstants.InitialPlayerPoints);
             ConsoleRenderer.VisualizeFoodInfo(field);
 
-            IEngine engine = new Engine(field, snake, difficultyLevel);
+            IEngine engine = new Engine(snake, difficultyLevel);
             engine.Run();
         }
 

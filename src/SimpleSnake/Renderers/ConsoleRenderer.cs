@@ -52,6 +52,7 @@
             Console.WriteLine("Simple Snake");
             Console.ForegroundColor = ConsoleColor.Black;
 
+
         }
 
         public static void VisualizePoint(int leftX, int topY, char symbol)

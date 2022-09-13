@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class CyanFood : Food
+    public class CyanFood : Food
     {
         private const ConsoleColor foodColor = ConsoleColor.Cyan;
         private const int foodPoints = 2;

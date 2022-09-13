@@ -15,14 +15,16 @@
         private readonly Queue<Point> snake;
         private readonly Random random;
 
+        private const char snakeSymbol = '\u2588';
+        private const char snakeHeadSymbol = ':';
+        private const char empytSpace = ' ';
+        private const ConsoleColor snakeBoddyColor = ConsoleColor.DarkGreen;
+        private const ConsoleColor snakeHeadColor = ConsoleColor.Green;
+
         private int nextLeftX;
         private int nextTopY;
         private int foodIndex;
         private int totalPoints;
-
-        private const char snakeSymbol = '\u25CF';
-        private const char empytSpace = ' ';
-        private const ConsoleColor snakeColor = ConsoleColor.DarkGreen;
         private const int initialSnakePoints = 6;
 
         private Snake()
@@ -45,54 +47,57 @@
             this.GetNextPoint(direction, currentSnakeHeadPossition);
             Point nextPositionOfSnakeHead = new Point(this.nextLeftX, this.nextTopY);
 
-            if (!isNextMovePossible(nextPositionOfSnakeHead))
+            if (!IsNextMovePossible(nextPositionOfSnakeHead))
             {
                 return false;
             }
 
-            if (nextPositionOfSnakeHead.LeftX == this.foods[foodIndex].LeftX &&
-                nextPositionOfSnakeHead.TopY == this.foods[foodIndex].TopY)
+            DrawSnakeNextPosition(snake, currentSnakeHeadPossition, nextPositionOfSnakeHead, direction);
+
+            return true;
+        }
+
+        private void DrawSnakeNextPosition(Queue<Point> snake, Point currentSnakeHeadPossition, Point nextPositionOfSnakeHead, Point direction)
+        {
+            bool isNextPositionFood = nextPositionOfSnakeHead.LeftX == this.foods[foodIndex].LeftX &&
+                                      nextPositionOfSnakeHead.TopY == this.foods[foodIndex].TopY;
+
+            if (isNextPositionFood)
             {
                 this.Eat(direction, currentSnakeHeadPossition);
             }
 
             this.snake.Enqueue(nextPositionOfSnakeHead);
-            Console.ForegroundColor = snakeColor;
-            nextPositionOfSnakeHead.Draw(snakeSymbol);
+
+            Console.ForegroundColor = snakeBoddyColor;
+            currentSnakeHeadPossition.Draw(snakeSymbol);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.BackgroundColor = snakeHeadColor;
+
+            nextPositionOfSnakeHead.Draw(snakeHeadSymbol);
             Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.White;
+
             Point snakeTail = this.snake.Dequeue();
             snakeTail.Draw(empytSpace);
-
-            return true;
         }
 
         public void DrawSnakeForInitialDirectionLeft(Point direction)
         {
-            for (int i = 0; i < 6; i++)
+            Point currentSnakeHeadPossition = this.snake.Last();
+            this.GetNextPoint(direction, currentSnakeHeadPossition);
+            Point nextPositionOfSnakeHead = new Point(this.nextLeftX, this.nextTopY);
+
+            for (int i = 0; i < initialSnakePoints; i++)
             {
-                Point currentSnakeHeadPossition = this.snake.Last();
-                this.GetNextPoint(direction, currentSnakeHeadPossition);
-                Point nextPositionOfSnakeHead = new Point(this.nextLeftX, this.nextTopY);
-
-                if (nextPositionOfSnakeHead.LeftX == this.foods[foodIndex].LeftX &&
-                    nextPositionOfSnakeHead.TopY == this.foods[foodIndex].TopY)
-                {
-                    this.Eat(direction, currentSnakeHeadPossition);
-                }
-
-                this.snake.Enqueue(nextPositionOfSnakeHead);
-                Console.ForegroundColor = snakeColor;
-                nextPositionOfSnakeHead.Draw(snakeSymbol);
-                Console.BackgroundColor = ConsoleColor.White;
-                Point snakeTail = this.snake.Dequeue();
-                snakeTail.Draw(empytSpace);
+                DrawSnakeNextPosition(snake, currentSnakeHeadPossition, nextPositionOfSnakeHead, direction);
             }
         }
 
         private void CreateSnake()
         {
-            int snakeSpawnTopY = this.random.Next(GlobalConstants.InitiaFieldlTopYConsoleCursor + 5, GlobalConstants.InitiaFieldlTopYConsoleCursor + 10);
-            int snakeSpawnLeftX = this.random.Next(GlobalConstants.InitialFieldLeftXConsoleCursor + 25, GlobalConstants.InitialFieldLeftXConsoleCursor + 35);
+            int snakeSpawnLeftX = this.random.Next(GlobalConstants.InitialSnakeMinLeftX, GlobalConstants.InitialSnakeMaxLeftX);
+            int snakeSpawnTopY = this.random.Next(GlobalConstants.InitialSnakeMinTopY, GlobalConstants.InitialSnakeMaxTopY);
 
             for (int currLeftX = snakeSpawnLeftX; currLeftX < snakeSpawnLeftX + initialSnakePoints; currLeftX++)
             {
@@ -127,7 +132,7 @@
             this.foodIndex = this.field.CreateFood(this.snake);
         }
 
-        private bool isNextMovePossible(Point nextPositionOfSnakeHead)
+        private bool IsNextMovePossible(Point nextPositionOfSnakeHead)
         {
             if (this.snake.Any(p => p.LeftX == this.nextLeftX && p.TopY == nextTopY))
             {

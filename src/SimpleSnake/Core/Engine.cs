@@ -12,7 +12,6 @@
     {
         private readonly Point[] pointOfDirection;
         private readonly Snake snake;
-        private readonly Field field;
         private readonly DifficultyLevel difficultyLevel;
 
         private Direction direction;
@@ -28,10 +27,9 @@
             this.randomDirectionValue = new Random();
         }
 
-        public Engine(Field field, Snake snake, DifficultyLevel difficultyLevel)
+        public Engine(Snake snake, DifficultyLevel difficultyLevel)
             : this()
         {
-            this.field = field;
             this.snake = snake;
             this.difficultyLevel = difficultyLevel;
         }

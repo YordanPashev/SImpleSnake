@@ -79,7 +79,6 @@
 
             SetVerticalLine(0);
             SetVerticalLine(this.LeftX - 1);
-
         }
     }
 }
