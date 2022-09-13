@@ -15,9 +15,6 @@ The game has 3 Levels of difficulty and List of TOP 3 Highest Player Scores.
 This project is licensed under the MIT License - see the [LICENSE.txt](https://github.com/YordanPashev/SImpleSnake/blob/main/LICENSE) file for details
 
 
-
-# Building Status
-
 ![](https://img.shields.io/static/v1?label=Status&message=Succeded&color=success&style=plastic&logo=visual-studio)
 
 
