@@ -62,7 +62,7 @@
         public static void InvalidNameMessage()
         {
             Console.SetCursorPosition(GlobalConstants.NewHighScoreLeftX + 10, GlobalConstants.NewHighScoreTopY - 1);
-            Console.WriteLine("Invalid name! (must be 20 characters max)");
+            Console.WriteLine("Invalid name! (must be 20 symbols max)");
         }
 
         public static void VisualizeGameName()
