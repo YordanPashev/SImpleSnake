@@ -1,5 +1,6 @@
 # Simple Snake :snake:
-Simple Snake is a Classical Console game we all love playing!
+Simple Snake is a Classical Console game we all love playing! 
+The game has 3 Levels of difficulty and List of TOP 3 Highest Player Scores.
 
 # Author
 - [Yordan Pashev](https://github.com/YordanPashev)
