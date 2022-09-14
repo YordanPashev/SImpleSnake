@@ -10,8 +10,6 @@
     {
         private readonly Random random;
         private readonly Field field;
-        private char symbol;
-
 
         protected Food(Field field, int foodPoints, ConsoleColor foodColor, char foodSymbol) 
             : base(field.LeftX, field.TopY)
@@ -19,7 +17,7 @@
             this.field = field;
             this.Points = foodPoints;
             this.Color = foodColor;
-            this.symbol = foodSymbol;
+            this.Symbol = foodSymbol;
             this.random = new Random();
         }
 
@@ -27,7 +25,7 @@
 
         public ConsoleColor Color { get; private set; }
 
-        public char Symbol => this.symbol;
+        public char Symbol { get; private set; }
 
         public void SetRandomPosition(Queue<Point> snake)
         {
@@ -38,7 +36,7 @@
             } while(snake.Any(s => s.LeftX == this.LeftX && s.TopY == this.TopY));
 
             Console.ForegroundColor = this.Color;
-            this.Draw(this.symbol);
+            this.Draw(this.Symbol);
             Console.ForegroundColor = ConsoleColor.Black;
         }
 

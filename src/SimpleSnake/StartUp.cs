@@ -58,8 +58,7 @@
             }
 
             Console.Clear();
-            DifficultyLevel level = (DifficultyLevel)levelValue;
-            return level;
+            return (DifficultyLevel)levelValue;      
         }
     }
 }
