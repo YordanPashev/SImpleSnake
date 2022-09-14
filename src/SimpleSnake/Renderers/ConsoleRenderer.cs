@@ -123,16 +123,16 @@
             List<Food> foods = field.GetAllTypeOfFoods().OrderByDescending(f => f.Points).ToList();
             int leftX = GlobalConstants.FoodInfoLeftX;
             int topY = GlobalConstants.FoodInfoTopY;
-            int foodInfoLine = 2;
+            int foodInfoLineNumber = 2;
 
-            for (int i = 0; i < foods.Count; i++)
+            foreach (Food foodType in foods)
             {
-                Console.SetCursorPosition(leftX, topY + foodInfoLine);
-                Console.ForegroundColor = foods[i].Color;
-                Console.Write(GlobalConstants.FoodSymbol);
+                Console.SetCursorPosition(leftX, topY + foodInfoLineNumber);
+                Console.ForegroundColor = foodType.Color;
+                Console.Write(foodType.Symbol);
                 Console.ForegroundColor = ConsoleColor.Black;
-                Console.Write($" -> {foods[i].Points} Points");
-                foodInfoLine += 2;
+                Console.Write($" -> {foodType.Points} Points");
+                foodInfoLineNumber += 2;
             }
         }
     }

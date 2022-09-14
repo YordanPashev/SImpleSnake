@@ -5,11 +5,14 @@
     public class MagentaFood : Food
     {
         private const ConsoleColor foodColor = ConsoleColor.Magenta;
-        private const int foodPoints = 3;
+        private const char symbol = '\u25A0';
+        private const int points = 3;
 
         public MagentaFood(Field field)
-            : base(field, foodPoints, foodColor)
+            : base(field, points, foodColor, symbol)
         {
         }
+
+        public char FoodSymbol => symbol;
     }
 }

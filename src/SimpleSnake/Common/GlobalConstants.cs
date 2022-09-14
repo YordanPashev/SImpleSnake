@@ -75,7 +75,6 @@
         public const int InitialSnakeMaxTopY = InitiaFieldlTopYConsoleCursor + 12;
 
         // Symbols
-        public const char FoodSymbol = '\u25CF';
         public const char HorizontalWallSymbol = '\u2588';
         public const char VerticalWallSymbol = '\u2588';
     }
