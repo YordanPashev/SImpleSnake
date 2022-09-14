@@ -19,7 +19,7 @@ This project is licensed under the MIT License - see the [LICENSE.txt](https://g
 
 
 
-![Simple Snake Game Play Image01](<https://www.linkpicture.com/q/SimpleNskaeIMG01_1.png)
+![Simple Snake Game Play Image01](https://www.linkpicture.com/q/SimpleNskaeIMG01_1.png)
 
-![Simple Snake Game Play Image02](<https://www.linkpicture.com/q/SimpleNskaeIMG01_1.png)
+![Simple Snake Game Play Image02](https://www.linkpicture.com/q/SimpleNskaeIMG01_1.png)
 
