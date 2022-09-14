@@ -2,7 +2,7 @@
 
 Simple Snake is a Classical Console game we all love playing! 
 
-The game has 3 Levels of difficulty and List of TOP 3 Highest Player Scores.
+The game has 3 levels of difficulty, 3 type of food and a list of TOP 3 Highest Player Scores.
 
 
 # Author
