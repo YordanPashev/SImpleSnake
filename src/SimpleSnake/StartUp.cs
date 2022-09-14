@@ -19,7 +19,6 @@
         public static void Main()
         {
             ConsoleWindow.CustomizeConsole();
-            Console.WriteLine('\u25AA');
             DifficultyLevel difficultyLevel = GetDifficultyLevel();
             PlayerDto[] topThreePlayers = GetHighScoreList();
 
